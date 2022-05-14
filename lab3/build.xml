@@ -20,4 +20,26 @@
     <target name="retrieve" depends="clean" description="--> retreive dependencies with ivy">
         <ivy:retrieve/>
     </target>
+
+    <target name="compile" depends="retrieve" description="--> compile the project">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${bin.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="lib.path.id" includeAntRuntime="false"/>
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" classpathref="lib.path.id" includeAntRuntime="false"/>
+    </target>
+
+    <target name="build" depends="compile">
+        <manifest file="${src.dir}/resources/META-INF/MANIFEST.MF" mode="update">
+            <attribute name="Main-Class" value="${main.class}" />
+        </manifest>
+        <jar destfile="${build.dir}/${jar.name}.jar" basedir="${build.dir}"
+             manifest="${src.dir}/resources/META-INF/MANIFEST.MF">
+            <fileset dir="${basedir}/">
+                <include name="lib/*.jar"/>
+            </fileset>
+            <fileset dir="${src.dir}">
+                <exclude name="java/**" />
+            </fileset>
+        </jar>
+    </target>
 </project>
