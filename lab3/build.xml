@@ -42,4 +42,24 @@
             </fileset>
         </jar>
     </target>
+
+    <target name="compile-test" depends="compile" description="--> compile the tests">
+        <javac srcdir="${test.dir}" destdir="${bin.dir}" classpathref="lib.path.id" includeAntRuntime="false"/>
+    </target>
+
+    <target name="test" depends="compile-test" description="--> run tests">
+        <mkdir dir="${bin.dir}/reports" />
+        <junitlauncher haltonfailure="true" printsummary="true">
+
+            <classpath refid="lib.path.id" />
+            <classpath>
+                <pathelement location="${bin.dir}"/>
+            </classpath>
+
+            <testclasses outputDir="${bin.dir}/reports">
+                <fileset dir="${bin.dir}"/>
+                <listener type="legacy-plain" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
+    </target>
 </project>
