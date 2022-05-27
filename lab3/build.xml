@@ -62,4 +62,23 @@
             </testclasses>
         </junitlauncher>
     </target>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="ant/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="music">
+        <trycatch>
+            <try>
+                <ant target="build"/>
+                <sound><success source="ant/success.wav"/></sound>
+            </try>
+            <catch>
+                <sound><fail source="ant/fail.wav"/></sound>
+                <fail message="Task failed"/>
+            </catch>
+        </trycatch>
+    </target>
 </project>
