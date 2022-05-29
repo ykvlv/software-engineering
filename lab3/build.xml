@@ -17,7 +17,7 @@
         <delete dir="${lib.dir}"/>
     </target>
 
-    <target name="retrieve" depends="clean" description="--> retreive dependencies with ivy">
+    <target name="retrieve" depends="clean" description="--> retrieve dependencies with ivy">
         <ivy:retrieve/>
     </target>
 
@@ -80,5 +80,51 @@
                 <fail message="Task failed"/>
             </catch>
         </trycatch>
+    </target>
+
+    <target name="alt">
+        <delete dir="${alt.src.dir}"/>
+        <mkdir dir="${alt.src.dir}"/>
+        <copy todir="${alt.src.dir}/java">
+            <fileset dir="${src.dir}/java"/>
+            <globmapper from="*.java" to="*Alt.java"/>
+        </copy>
+        <copy todir="${alt.src.dir}/resources">
+            <fileset dir="${src.dir}/resources"/>
+        </copy>
+
+        <replace dir="${alt.src.dir}/java" token="Main" value="MainAlt"/>
+        <replace dir="${alt.src.dir}/java" token="AreaCheckUtil" value="AreaCheckUtilAlt"/>
+        <replace dir="${alt.src.dir}/java" token="HibernateSessionFactoryUtil" value="HibernateSessionFactoryUtilAlt"/>
+        <replace dir="${alt.src.dir}/java" token="ValidationUtil" value="ValidationUtilAlt"/>
+        <replace dir="${alt.src.dir}/java" token="ResponseService" value="ResponseServiceAlt"/>
+        <replace dir="${alt.src.dir}/java" token="ResponseDao" value="ResponseDaoAlt"/>
+        <replace dir="${alt.src.dir}/java" token="TimeBean" value="TimeBeanAlt"/>
+        <replace dir="${alt.src.dir}/java" token="ResponseBean" value="ResponseBeanAlt"/>
+        <replace dir="${alt.src.dir}/java" token="DataBean" value="DataBeanAlt"/>
+
+        <replaceregexp match="(\W)responseDao(\W)" replace="\1responseDaoAlt\2" flags="g" >
+            <fileset dir="${alt.src.dir}/java"/>
+        </replaceregexp>
+
+        <replaceregexp match="(\W)bean(\W)" replace="\1responseBeanAlt\2" flags="g" >
+            <fileset dir="${alt.src.dir}/java"/>
+        </replaceregexp>
+
+        <replaceregexp match="(\W)sessionFactory(\W)" replace="\1hibernateSessionFactory\2" flags="g" >
+            <fileset dir="${alt.src.dir}/java"/>
+        </replaceregexp>
+
+        <replaceregexp match="(\W)sr(\W)" replace="\1serviceRegistry\2" flags="g" >
+            <fileset dir="${alt.src.dir}/java"/>
+        </replaceregexp>
+
+        <antcall target="build">
+            <param name="src.dir" value="${alt.src.dir}"/>
+            <param name="jar.name" value="${jar.name}Alt"/>
+            <param name="main.class" value="${main.class}Alt"/>
+            <param name="build.dir" value="${build.dir}/alt"/>
+        </antcall>
+
     </target>
 </project>
