@@ -15,7 +15,7 @@ public final class PropertiesUtil {
 
     private static void loadProperties() {
         try (InputStream inputStream = PropertiesUtil.class
-                .getClassLoader().getResourceAsStream("application.properties.example")) {
+                .getClassLoader().getResourceAsStream("application.properties")) {
             PROPERTIES.load(inputStream);
         } catch (IOException | NullPointerException e) {
             throw new RuntimeException("Необходимо инициализировать файл application.properties. Воспользуйтесь application.properties.example", e);
