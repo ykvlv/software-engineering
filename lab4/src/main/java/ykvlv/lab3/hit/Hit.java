@@ -79,4 +79,11 @@ public class Hit implements Comparable<Hit> {
             return 0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Hit: " + result +
+                "\nDate: " + formattedTime +
+                "\nDuration: " + executionTime;
+    }
 }
