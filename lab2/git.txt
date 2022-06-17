@@ -1,0 +1,79 @@
+rm -rf git_lab2
+mkdir git_lab2
+cd git_lab2
+
+git init
+git config --local user.name "Grigory Yakovlev"
+git config --local user.email "ykvlv@niuitmo.ru"
+cp ../r/r0/* .
+git add .
+git commit -m "r0: добавлена возможность ввода чисел"
+
+cp ../r/r1/* .
+git add .
+git commit -m "r1: добавлено преобразование чисел в int"
+
+git config --local user.name "Martin Raila"
+git config --local user.email "raila@google.com"
+git checkout -b feature_operations
+cp ../r/r2/* .
+git add .
+git commit -m "r2: добавлен файл с мат. операциями"
+
+cp ../r/r3/* .
+git commit -am "r3: добавлена первая операция (сложение)"
+
+git checkout -b feature_choice_operations
+cp ../r/r4/* .
+git commit -am "r4: добавлена возможность ввода операции"
+
+git config --local user.name "Grigory Yakovlev"
+git config --local user.email "ykvlv@niuitmo.ru"
+git checkout master
+cp ../r/r5/* .
+git commit -am "r5: улучшен ввод чисел"
+
+cp ../r/r6/* .
+git commit -am "r6: добавлена проверка на int с принудительным вводом"
+
+git config --local user.name "Martin Raila"
+git config --local user.email "raila@google.com"
+git checkout feature_choice_operations
+cp ../r/r7/* .
+git commit -am "r7: добавлено приглашение к выбору операции"
+
+git config --local user.name "Grigory Yakovlev"
+git config --local user.email "ykvlv@niuitmo.ru"
+git checkout master
+git merge feature_choice_operations
+---------------------------------------------------
+cp ../r/r8/* .
+git commit -am "r8: сморжена ветка feature_choice_operations и устранен конфликт слияния"
+
+cp ../r/r9/* .
+git commit -am "r9: добавлена вторая операция (вычитание)"
+
+cp ../r/r10/* .
+git commit -am "r10: улучшено приглашение к выбору операции"
+
+cp ../r/r11/* .
+git commit -am "r11: добавлена проверка на наличие операции с принудительным вводом"
+
+git config --local user.name "Martin Raila"
+git config --local user.email "raila@google.com"
+git checkout feature_operations
+git mv op.py operations.py
+cp ../r/r12/* .
+git commit -am "r12: добавлены остальные математические операции"
+
+cp ../r/r13/* .
+git commit -am "r13: добавлен подробный вывод ответа"
+
+git config --local user.name "Grigory Yakovlev"
+git config --local user.email "ykvlv@niuitmo.ru"
+git checkout master
+git merge feature_operations
+---------------------------------------------------
+git rm op.py
+cp ../r/r14/* .
+git commit -am "r14: сморжена ветка feature_operations и устранены конфликты слияния"

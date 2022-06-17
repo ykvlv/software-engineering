@@ -1,0 +1,77 @@
+rm -rf svn_lab2
+rm -rf workdir
+svnadmin create svn_lab2
+cd svn_lab2
+
+URL_SVN_PATH=file:///Users/ykvlv/Desktop/MSP_lab2/svn_lab2
+
+svn mkdir -m "pj" $URL_SVN_PATH/trunk $URL_SVN_PATH/branches
+cd ..
+svn checkout $URL_SVN_PATH/trunk workdir
+cd workdir
+
+cp ../r/r0/* .
+svn add *
+svn commit -m "r0: добавлена возможность ввода чисел" --username="Grigory Yakovlev"
+
+cp ../r/r1/* .
+svn commit -m "r1: добавлено преобразование чисел в int" --username="Grigory Yakovlev"
+
+svn copy $URL_SVN_PATH/trunk $URL_SVN_PATH/branches/feature_operations -m 'feature_operations' --username="Martin Raila"
+svn switch $URL_SVN_PATH/branches/feature_operations
+cp ../r/r2/* .
+svn add op.py
+svn commit -m "r2: добавлен файл с мат. операциями" --username="Martin Raila"
+
+cp ../r/r3/* .
+svn commit -m "r3: добавлена первая операция (сложение)" --username="Martin Raila"
+
+svn copy $URL_SVN_PATH/branches/feature_operations $URL_SVN_PATH/branches/feature_choice_operations -m 'feature_choice_operations' --username="Martin Raila"
+svn switch $URL_SVN_PATH/branches/feature_choice_operations
+cp ../r/r4/* .
+svn commit -m "r4: добавлена возможность ввода операции" --username="Martin Raila"
+
+svn switch $URL_SVN_PATH/trunk
+cp ../r/r5/* .
+svn commit -m "r5: улучшен ввод чисел" --username="Grigory Yakovlev"
+
+cp ../r/r6/* .
+svn commit -m "r6: добавлена проверка на int с принудительным вводом" --username="Grigory Yakovlev"
+
+svn switch $URL_SVN_PATH/branches/feature_choice_operations
+cp ../r/r7/* .
+svn commit -m "r7: добавлено приглашение к выбору операции" --username="Martin Raila"
+
+svn switch $URL_SVN_PATH/trunk
+svn up
+svn merge $URL_SVN_PATH/branches/feature_choice_operations
+-----------------------------------------------------------------------------------------
+cp ../r/r8/* .
+svn resolved main.py
+svn commit -m "r8: сморжена ветка feature_choice_operations и устранен конфликт слияния" --username="Grigory Yakovlev"
+
+cp ../r/r9/* .
+svn commit -m "r9: добавлена вторая операция (вычитание)" --username="Grigory Yakovlev"
+
+cp ../r/r10/* .
+svn commit -m "r10: улучшено приглашение к выбору операции" --username="Grigory Yakovlev"
+
+cp ../r/r11/* .
+svn commit -m "r11: добавлена проверка на наличие операции с принудительным вводом" --username="Grigory Yakovlev"
+
+svn switch $URL_SVN_PATH/branches/feature_operations
+svn mv op.py operations.py
+cp ../r/r12/* .
+svn commit -m "r12: добавлены остальные математические операции" --username="Martin Raila"
+
+cp ../r/r13/* .
+svn commit -m "r13: добавлен подробный вывод ответа" --username="Martin Raila"
+
+svn switch $URL_SVN_PATH/trunk
+svn up
+svn merge $URL_SVN_PATH/branches/feature_operations
+-----------------------------------------------------------------------------------------
+svn rm op.py
+cp ../r/r14/* .
+svn resolved main.py
+svn commit -m "r14: сморжена ветка feature_operations и устранены конфликты слияния" --username="Grigory Yakovlev"
